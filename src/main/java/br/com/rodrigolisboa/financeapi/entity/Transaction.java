@@ -4,10 +4,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import br.com.rodrigolisboa.financeapi.enums.TransactionType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +30,9 @@ public class Transaction {
     private String description;
 
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+    private LocalDate date;
 
     }
