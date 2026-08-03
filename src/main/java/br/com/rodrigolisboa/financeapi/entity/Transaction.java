@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import br.com.rodrigolisboa.financeapi.enums.TransactionType;
 
 import java.math.BigDecimal;
@@ -27,12 +26,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String description;
-
     private BigDecimal amount;
-
     @Enumerated(EnumType.STRING)
-    private TransactionType type;
+   private TransactionType type;
     private LocalDate date;
 
     }

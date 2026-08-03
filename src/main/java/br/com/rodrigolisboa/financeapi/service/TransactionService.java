@@ -4,6 +4,8 @@ import br.com.rodrigolisboa.financeapi.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import br.com.rodrigolisboa.financeapi.entity.Transaction;
 import java.util.List;
+import br.com.rodrigolisboa.financeapi.exception.TransactionNotFoundException;
+
 
 @Service
 public class TransactionService {
@@ -20,7 +22,9 @@ public class TransactionService {
         return repository.findAll();
     }
     public Transaction update(Long id, Transaction transaction) {
-        Transaction existingTransaction = repository.findById(id).orElseThrow();
+        Transaction existingTransaction =
+                repository.findById(id)
+                        .orElseThrow(() -> new TransactionNotFoundException(id));
 
         existingTransaction.setDescription(transaction.getDescription());
         existingTransaction.setAmount(transaction.getAmount());
@@ -33,6 +37,7 @@ public class TransactionService {
         repository.deleteById(id);
     }
     public Transaction findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException(id));
     }
 }

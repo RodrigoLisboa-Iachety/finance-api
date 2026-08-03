@@ -14,20 +14,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import br.com.rodrigolisboa.financeapi.dto.TransactionRequestDTO;
+import jakarta.validation.Valid;
+import br.com.rodrigolisboa.financeapi.mapper.TransactionMapper;
 
 @RestController
 @RequestMapping("/transactions")
-public class TransactionController {
+public class  TransactionController {
 
     private final TransactionService service;
+    private final TransactionMapper mapper;
 
-    public TransactionController(TransactionService service) {
+    public TransactionController(
+            TransactionService service,
+            TransactionMapper mapper) {
+
         this.service = service;
+        this.mapper = mapper;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Transaction create(@RequestBody Transaction transaction) {
+    public Transaction create(
+            @Valid @RequestBody TransactionRequestDTO transactionDTO) {
+
+        Transaction transaction = mapper.toEntity(transactionDTO);
         return service.save(transaction);
     }
     @GetMapping
